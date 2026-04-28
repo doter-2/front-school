@@ -16,7 +16,7 @@ const ProfilePage = ({ data, payment = [] }) => {
     }
   }, [data]);
 
-  const BASE_URL = "http://127.0.0.1:8000";
+  const BASE_URL = "https://school-dairy.onrender.com";
 
   const avatarURL = user?.avatar?.startsWith("http")
     ? user.avatar

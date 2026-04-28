@@ -8,7 +8,7 @@ import ProfilePage from "./pages/ProfilePage";
 import SchedulePage from "./pages/SchedulePage";
 import GradesPage from "./pages/GradesPage";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import MainLayout from "src/Layouts/MainLayout.jsx";
+import MainLayout from "./layout/MainLayout";
 import API from "./api/axios";
 import AttendancePage from "./pages/AttendancePage";
 

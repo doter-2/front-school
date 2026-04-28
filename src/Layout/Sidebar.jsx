@@ -9,7 +9,7 @@ const Sidebar = ({ user }) => {
       <Link to="/">🏠 Главная</Link>
       <Link to="/schedule">📅 Расписание</Link>
       <Link to="/grades">📈 Оценки</Link>
-      <Link to="/profile">👤 Профиль {user.username}</Link>
+      <Link to="/profile">👤 Профиль {user?.username}</Link>
       <Link to="/attendance">🧾 Посещаемость</Link>
     </div>
   );
