@@ -38,7 +38,7 @@ API.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          "https://school-dairy.onrender.com/api/token/refresh/",
+          "http://127.0.0.1:8000/api/token/refresh/",
           { refresh },
         );
 
