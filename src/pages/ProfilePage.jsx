@@ -48,12 +48,12 @@ const ProfilePage = ({ data, payment = [] }) => {
         {
           headers: {
             Authorization: `Bearer ${access_token}`,
-            "Content-Type": "multipart/form-user",
+            "Content-Type": "multipart/form-data",
           },
         },
       );
 
-      console.log("UPDATED:", res.user);
+      console.log("UPDATED:", res.data);
       setUser(res.data);
       setLoading(false);
       setFile(null);
