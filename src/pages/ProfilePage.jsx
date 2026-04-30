@@ -17,10 +17,13 @@ const ProfilePage = ({ data, payment = [] }) => {
   }, [data]);
 
   const BASE_URL = "https://school-dairy.onrender.com";
+  const DEFAULT_AVATAR = "/default-avatar.png"; // положи в public
 
-  const avatarURL = user?.avatar?.startsWith("http")
-    ? user.avatar
-    : `${BASE_URL}${user?.avatar}`;
+  const avatarURL = user?.avatar
+    ? user.avatar.startsWith("http")
+      ? user.avatar
+      : `${BASE_URL}${user.avatar}`
+    : DEFAULT_AVATAR;
 
   const handleImage = (e) => {
     const img = e.target.files[0];
@@ -48,7 +51,6 @@ const ProfilePage = ({ data, payment = [] }) => {
         {
           headers: {
             Authorization: `Bearer ${access_token}`,
-            "Content-Type": "multipart/form-data",
           },
         },
       );
@@ -61,6 +63,7 @@ const ProfilePage = ({ data, payment = [] }) => {
     } catch (err) {
       console.log(err);
       setLoading(false);
+      console.log(res.data);
     }
   }
 
