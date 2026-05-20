@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 const ProfilePage = ({ data, payment = [] }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
   const [showPayments, setShowPayments] = useState(false);
   const [openAvatar, setOpenAvatar] = useState(false);
 
@@ -10,33 +10,44 @@ const ProfilePage = ({ data, payment = [] }) => {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const BASE_URL = "https://front-school.mdam6266.workers.dev";
+  const DEFAULT_AVATAR = "/default-avatar.png";
+
   useEffect(() => {
     if (data) {
       setUser(data);
     }
   }, [data]);
 
-  const BASE_URL = "https://school-dairy.onrender.com";
-  const DEFAULT_AVATAR = "/default-avatar.png"; // положи в public
-
   const avatarURL = user?.avatar
     ? user.avatar.startsWith("http")
       ? user.avatar
-      : `${BASE_URL}${user.avatar}`
+      : `${BASE_URL}${user.avatar.startsWith("/") ? "" : "/"}${user.avatar}`
     : DEFAULT_AVATAR;
 
+  // ✅ выбор изображения (ИСПРАВЛЕНО)
   const handleImage = (e) => {
-    const img = e.target.files[0];
+    const img = e.target.files?.[0];
+
+    if (!img) return;
+
     setFile(img);
     setPreview(URL.createObjectURL(img));
   };
 
+  // ✅ обновление профиля
   async function updateProfile() {
     const access_token = localStorage.getItem("access_token");
+
+    if (!access_token) {
+      console.log("NO TOKEN");
+      return;
+    }
+
     const formData = new FormData();
-    formData.append("username", user?.username);
-    formData.append("email", user?.email);
-    formData.append("student_class", user?.student_class);
+    formData.append("username", user?.username || "");
+    formData.append("email", user?.email || "");
+    formData.append("student_class", user?.student_class || "");
 
     if (file) {
       formData.append("avatar", file);
@@ -46,7 +57,7 @@ const ProfilePage = ({ data, payment = [] }) => {
       setLoading(true);
 
       const res = await axios.patch(
-        "https://school-dairy.onrender.com/api/user-info/update/",
+        `${BASE_URL}/api/user-info/update/`,
         formData,
         {
           headers: {
@@ -55,15 +66,19 @@ const ProfilePage = ({ data, payment = [] }) => {
         },
       );
 
-      console.log("UPDATED:", res.data);
-      setUser(res.data);
-      setLoading(false);
+      console.log("RESPONSE:", res.data);
+
+      // ✅ backend возвращает { user: {...} }
+      if (res.data?.user) {
+        setUser(res.data.user);
+      }
+
       setFile(null);
       setPreview(null);
     } catch (err) {
-      console.log(err);
+      console.log("ERROR:", err.response?.data || err.message);
+    } finally {
       setLoading(false);
-      console.log(res.data);
     }
   }
 
@@ -93,6 +108,9 @@ const ProfilePage = ({ data, payment = [] }) => {
             src={preview || avatarURL}
             alt="avatar"
             onClick={() => setOpenAvatar(true)}
+            onError={(e) => {
+              e.target.src = DEFAULT_AVATAR;
+            }}
             style={{
               width: "80px",
               height: "80px",
@@ -103,7 +121,7 @@ const ProfilePage = ({ data, payment = [] }) => {
             }}
           />
 
-          {/* UPLOAD BUTTON */}
+          {/* UPLOAD */}
           <label
             style={{
               position: "absolute",
@@ -118,6 +136,7 @@ const ProfilePage = ({ data, payment = [] }) => {
               justifyContent: "center",
               cursor: "pointer",
               color: "#fff",
+              fontWeight: "bold",
             }}
           >
             +
@@ -138,7 +157,7 @@ const ProfilePage = ({ data, payment = [] }) => {
         </div>
       </div>
 
-      {/* SAVE BUTTON */}
+      {/* SAVE */}
       <button
         onClick={updateProfile}
         disabled={loading}
@@ -157,7 +176,7 @@ const ProfilePage = ({ data, payment = [] }) => {
         {loading ? "Сохранение..." : "💾 Сохранить изменения"}
       </button>
 
-      {/* DEBT WARNING */}
+      {/* DEBT */}
       {hasDebt && (
         <div
           style={{
@@ -173,7 +192,7 @@ const ProfilePage = ({ data, payment = [] }) => {
         </div>
       )}
 
-      {/* PAYMENTS BUTTON */}
+      {/* PAYMENTS */}
       <button
         onClick={() => setShowPayments(!showPayments)}
         style={{
@@ -190,7 +209,6 @@ const ProfilePage = ({ data, payment = [] }) => {
         💳 {showPayments ? "Скрыть платежи" : "Показать платежи"}
       </button>
 
-      {/* PAYMENTS */}
       {showPayments && (
         <div style={{ marginTop: "15px", display: "grid", gap: "10px" }}>
           {payment.map((p) => (
@@ -212,7 +230,7 @@ const ProfilePage = ({ data, payment = [] }) => {
         </div>
       )}
 
-      {/* AVATAR MODAL */}
+      {/* MODAL */}
       {openAvatar && (
         <div
           onClick={() => setOpenAvatar(false)}
@@ -223,11 +241,15 @@ const ProfilePage = ({ data, payment = [] }) => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            zIndex: 999,
           }}
         >
           <img
             src={preview || avatarURL}
             alt="avatar"
+            onError={(e) => {
+              e.target.src = DEFAULT_AVATAR;
+            }}
             style={{
               width: "300px",
               height: "300px",

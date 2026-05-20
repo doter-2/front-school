@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = ({ setAccess }) => {
-  // 🔥 принимаем проп
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -33,19 +32,21 @@ const LoginPage = ({ setAccess }) => {
 
     try {
       const res = await axios.post(
-        "https://school-dairy.onrender.com/api/login/",
+        "https://db-school-diary.onrender.com/api/login/",
         form,
       );
 
-      const token = res.data.access_token;
+      const access = res.data.access_token;
+      const refresh = res.data.refresh_token;
 
-      // сохраняем токены
-      localStorage.setItem("access_token", token);
-      localStorage.setItem("refresh_token", res.data.refresh_token);
+      if (!access) throw new Error("No token");
 
-      setAccess(token); // 🔥 ВОТ ЭТО КЛЮЧ
+      localStorage.setItem("access_token", access);
+      localStorage.setItem("refresh_token", refresh);
 
-      navigate("/"); // переход ПОСЛЕ setAccess
+      setAccess(access);
+
+      navigate("/");
     } catch (err) {
       setError("❌ Неверный логин или пароль");
     } finally {
@@ -63,7 +64,7 @@ const LoginPage = ({ setAccess }) => {
         <input
           type="email"
           name="email"
-          placeholder="Имя пользователя"
+          placeholder="Email"
           value={form.email}
           onChange={handleChange}
           required
@@ -81,10 +82,6 @@ const LoginPage = ({ setAccess }) => {
         <button type="submit" disabled={loading}>
           {loading ? "Вход..." : "Войти"}
         </button>
-
-        <p>
-          Нет аккаунта? <a href="/register">Регистрация</a>
-        </p>
       </form>
     </div>
   );
