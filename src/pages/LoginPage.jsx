@@ -82,6 +82,16 @@ const LoginPage = ({ setAccess }) => {
         <button type="submit" disabled={loading}>
           {loading ? "Вход..." : "Войти"}
         </button>
+
+        <p>
+          Нет аккаунта?{" "}
+          <a
+            onClick={() => navigate("/register")}
+            style={{ cursor: "pointer" }}
+          >
+            Зарегистрироваться
+          </a>
+        </p>
       </form>
     </div>
   );
