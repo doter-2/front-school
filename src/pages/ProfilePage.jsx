@@ -10,7 +10,8 @@ const ProfilePage = ({ data, payment = [] }) => {
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const BASE_URL = "https://front-school.mdam6266.workers.dev";
+  const BASE_URL = "https://db-school-diary.onrender.com";
+
   const DEFAULT_AVATAR = "/default-avatar.png";
 
   useEffect(() => {

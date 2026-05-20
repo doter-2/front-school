@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "https://school-dairy.onrender.com/api/",
+  baseURL: "https://db-school-diary.onrender.com/api/",
 });
 
 API.interceptors.request.use((config) => {
@@ -34,7 +34,7 @@ API.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          "https://school-dairy.onrender.com/api/token/refresh/",
+          "http://127.0.0.1:8000/api/token/refresh/, https://front-school.mdam6266.workers.dev/",
           { refresh },
         );
 
