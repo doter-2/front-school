@@ -34,7 +34,7 @@ API.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          "http://127.0.0.1:8000/api/token/refresh/, https://front-school.mdam6266.workers.dev/",
+          "https://db-school-diary.onrender.com/api/token/refresh/",
           { refresh },
         );
 
