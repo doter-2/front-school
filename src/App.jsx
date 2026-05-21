@@ -40,7 +40,7 @@ const App = () => {
       setData(res.data);
 
       loadSchedule(access, res.data.student_class || "1Б");
-      loadGrades(access, res.data.username);
+      loadGrades(access);
       loadAttendance(access, res.data.username);
       loadPayment(access, res.data.username);
     } catch (error) {
@@ -62,14 +62,13 @@ const App = () => {
     }
   }
 
-  async function loadGrades(access, username) {
+  async function loadGrades(access) {
     try {
-      const res = await API.get(`grades/?username=${username}`, {
+      const res = await API.get(`grades/`, {
         headers: {
           Authorization: `Bearer ${access}`,
         },
       });
-
       setGrades(res.data);
     } catch (error) {
       console.error(`ошибка при получении оценок: ${error}`);
