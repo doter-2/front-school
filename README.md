@@ -1,16 +1,54 @@
-# React + Vite
+# School Diary — Frontend
+Frontend часть веб-приложения электронного школьного дневника.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+##  Технологии
 
-Currently, two official plugins are available:
+- React
+- Vite
+- React Router DOM
+- Axios
+- JWT Authentication
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+ Функционал
 
-## Expanding the ESLint configuration
+- Регистрация и вход
+- Авторизация через JWT (access + refresh token)
+- Автоматическое обновление токена (Axios interceptors)
+- Protected Routes
+- Личный кабинет пользователя
+- Расписание уроков
+- Оценки
+- Посещаемость
+- Платежи
+- Обновление профиля (аватар, данные)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+
+  Авторизация
+
+Проект использует JWT:
+
+- access_token — хранится в localStorage
+- refresh_token — используется для обновления access токена
+- Axios автоматически обновляет токен при 401 ошибке
+
+
+
+## Backend
+
+Backend часть проекта:
+- Django REST API
+- JWT authentication
+- Cloudinary storage
+
+API URL:
+
+https://db-school-diary.onrender.com/api/
+
+##  Запуск проекта
+
+bash
+npm install
+npm run dev
