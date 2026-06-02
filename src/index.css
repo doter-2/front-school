@@ -10,7 +10,7 @@ body {
   width: 100%;
 }
 .content {
-  margin-left: 20%;
+  margin-left: 280px;
 }
 
 h1 {
@@ -671,4 +671,132 @@ select.register__input {
 
 .notfound__btn:active {
   transform: scale(0.97);
+}
+
+/* ==========================
+   MOBILE FIX
+========================== */
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .content {
+    margin-left: 0 !important;
+    padding: 15px;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .sidebar h2,
+  .sidebar .bottom {
+    display: none;
+  }
+
+  .sidebar a {
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* Navbar */
+  .navbar {
+    padding: 0 15px;
+  }
+
+  .navbar h3 {
+    font-size: 16px;
+  }
+
+  .navbar button {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  /* Заголовки */
+  h1 {
+    font-size: 22px;
+  }
+
+  /* Карточки */
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .card h2 {
+    font-size: 16px;
+  }
+
+  /* Расписание */
+  .lesson-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .lesson-right {
+    width: 100%;
+    text-align: left;
+  }
+
+  /* Посещаемость */
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  /* Оплаты */
+  .payment-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  /* Формы */
+  .register__form,
+  .auth-card {
+    width: calc(100% - 30px);
+    max-width: none;
+    margin: 15px;
+    padding: 25px;
+    box-sizing: border-box;
+  }
+
+  /* Аватар */
+  .avatar-wrapper {
+    width: 90px;
+    height: 90px;
+  }
+
+  /* 404 */
+  .notfound__card {
+    padding: 30px 20px;
+  }
+
+  .notfound__code {
+    font-size: 60px;
+  }
 }
